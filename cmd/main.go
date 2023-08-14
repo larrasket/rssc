@@ -4,21 +4,35 @@ import (
 	"fmt"
 	"net/http"
 
+	_ "embed"
+
 	"github.com/larrasket/rssc"
 )
 
+//go:embed README.html
+var README string
+
 func main() {
-	//AuthorRegex, ContentRegex, TitleRegex, DescriptionRegex string
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte(README))
+	})
+
 	http.HandleFunc("/rss", func(w http.ResponseWriter, r *http.Request) {
 		q := r.URL.Query()
 		prams := rssc.FilterPrams{AuthorRegex: q.Get("authorf"),
 			ContentRegex:     q.Get("contentf"),
 			TitleRegex:       q.Get("titlef"),
 			DescriptionRegex: q.Get("descriptionf"),
-			URL:              q.Get("source"),
+			URL:              q.Get("src"),
+			DotNet: func(b string) bool {
+				if b == "1" {
+					return true
+				}
+				return false
+			}(q.Get("net")),
 		}
-		ftype := q.Get("ftype")
-		entries, err := rssc.FilterFeed(&prams)
+		ftype := q.Get("t")
+		entries, err := rssc.FilterFeeds(&prams)
 		if err != nil {
 			w.Write([]byte(err.Error()))
 		}

@@ -1,0 +1,49 @@
+#+TITLE: rssc - rss customizer
+#+OPTIONS: num:nil
+#+OPTIONS: toc:nil
+#+OPTIONS: ^:nil
+
+
+rssc provides a real-time, self-hostable regex-oriented customization service for atom,
+rss and json feeds.
+
+* Usage
+rssc uses get request parameters to read user's preferences. following are the
+supported parameters:
++ ~src~: the source URL of the feeds. Example: https://hnrss.org/newest
++ ~t~: the type of desired source, can be ~rss~, ~atom~ or ~json~.
++ ~descriptionf~: regular expression filter to filter feeds based on the description property.
++ ~titlef~: regular expression filter to filter feeds based on the title property.
++ ~contentf~: regular expression filter to filter feeds based on the content property.
++ ~net~: boolean (1 or 0) (default to 0 when omitted) whether to use the .NET
+  engine regex instead of Go's.
+
+All regex should be valid [[https://github.com/google/re2/wiki/Syntax][RE2 regex syntax]] (in case of ~net~, see [[https://learn.microsoft.com/en-us/dotnet/standard/base-types/regular-expression-language-quick-reference][MS' Regular Expression Language]]).
+* Examples
+Replace https://rssc.fly.dev/ in the following examples with your instance of
+rssc (can be a ~localhost:8080~ if self-hosted).
+
++ Get Edward Snowden tweets that mention the CIA:
+
+  https://rssc.fly.dev/rss?src=https://nitter.lacontrevoie.fr/Snowden/rss&descriptionf=CIA
++ Get all new feeds that contain the word "emacs" but not the word "vim", and
+  not posted by user lr0 (hnrss.org does not provide a creator/author property, so the author filter here is only for a demonstration purpose.):
+
+  [[https://rssc.fly.dev/rss?src=https://hnrss.org/newest?q=emacs&titlef=^(?!.*\bvim\b).*\bEmacs\b.*&net=1&authorf=^(?!.*\blr0\b).*$][https://rssc.fly.dev/rss?src=https://hnrss.org/newest?q=emacs&titlef=^(?!.*\bvim\b).*\bEmacs\b.*&net=1&authorf=^(?!.*\blr0\b).*$]]
+
+  Note that ~net~ is used here because RE2 does not support lookarounds.
++ Get only posts about OpenAI from 4chan's g board:
+
+  [[https://rssc.fly.dev/rss?src=https://boards.4channel.org/g/index.rss&titlef=Open\s?AI|OpenAI][https://rssc.fly.dev/rss?src=https://boards.4channel.org/g/index.rss&titlef=Open\s?AI|OpenAI]]
++ Get geopolitical updates from your favorite hacker and skip all free software
+  movement goody propaganda:
+
+  [[https://rssc.fly.dev/rss?src=https://stallman.org/rss/rss.xml&contentf=^(?=.*(?:palestine|syria|egypt|iraq|israel|algeria|morocco))(?!.*(?:linux|gnu|software|programming|program)).*$&net=1][https://rssc.fly.dev/rss?src=https://stallman.org/rss/rss.xml&contentf=^(?=.*(?:palestine|syria|egypt|iraq|israel|algeria|morocco))(?!.*(?:linux|gnu|software|programming|program)).*$&net=1]]
++ Get BBC middle east updates that's only related to Palestine:
+
+  [[https://rssc.fly.dev/rss?src=http://feeds.bbci.co.uk/news/world/middle_east/rss.xml&titlef=(?i)palestine|palestinian|gaza][https://rssc.fly.dev/rss?src=http://feeds.bbci.co.uk/news/world/middle_east/rss.xml&titlef=(?i)palestine|palestinian|gaza]]
+* Notes
++ RE2 is much safer that the .NET Regex, that's to say, all the good features
+  that .NET engine enables you to use come with a risk cost and ends up
+  enabling [[https://github.com/dlclark/regexp2#catastrophic-backtracking-and-timeouts][catastrophic backtracking]], therefore a timeout of 5 seconds is currently
+  enabled on fly.dev instance when using ~net=1~.

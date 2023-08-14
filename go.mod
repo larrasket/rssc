@@ -3,6 +3,7 @@ module github.com/larrasket/rssc
 go 1.19
 
 require (
+	github.com/dlclark/regexp2 v1.10.0
 	github.com/gorilla/feeds v1.1.1
 	github.com/mmcdole/gofeed v1.2.1
 	github.com/pkg/errors v0.9.1
