@@ -47,3 +47,18 @@ rssc (can be a ~localhost:8080~ if self-hosted).
   that .NET engine enables you to use come with a risk cost and ends up
   enabling [[https://github.com/dlclark/regexp2#catastrophic-backtracking-and-timeouts][catastrophic backtracking]], therefore a timeout of 5 seconds is currently
   enabled on fly.dev instance when using ~net=1~.
++ rssc is pre-alpha. Please report bugs here [[https://github.com/larrasket/rssc][larrasket/rssc]].
+* Self-host
+To host rssc locally, install it using Go:
+#+begin_src shell
+go install github.com/larrasket/rssc@latest
+#+end_src
+
+Set environment variable for ~PORT~, if none rssc will use ~:8080~ by default.
+
+#+begin_src shell
+PORT=4040 rssc
+#+end_src
+
+Now rssc should be running at ~localhost:4040~. You can use the same examples
+provided, with replacing fly domain with your localhost.
