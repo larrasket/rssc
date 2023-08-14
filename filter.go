@@ -1,6 +1,7 @@
 package rssc
 
 import (
+	"context"
 	"regexp"
 	"time"
 
@@ -24,8 +25,11 @@ type FilterPrams struct {
 // Filter `url` based on `prams` if `prams` is nil (or all filters are empty)
 // return the original feeds
 func FilterFeeds(prams *FilterPrams) (*gofeed.Feed, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
+	defer cancel()
+
 	fp := gofeed.NewParser()
-	feeds, err := fp.ParseURL(prams.URL)
+	feeds, err := fp.ParseURLWithContext(prams.URL, ctx)
 	if err != nil {
 		return nil, errors.Wrapf(err, "couldn't read feeds %s ", prams.URL)
 	}
