@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"os"
 	"time"
 
 	_ "embed"
@@ -63,7 +64,12 @@ func main() {
 		w.Write([]byte(feeds))
 	})
 
-	fmt.Println("Listening on :8080...")
-	http.ListenAndServe(":8080", nil)
+	port, ok := os.LookupEnv("PORT")
+	if ok == false {
+		port = "8080"
+	}
+
+	fmt.Printf("Listening on :%s...\n", port)
+	http.ListenAndServe(":"+port, nil)
 
 }
