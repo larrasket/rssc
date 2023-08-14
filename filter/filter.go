@@ -1,4 +1,4 @@
-package rssc
+package filter
 
 import (
 	"context"

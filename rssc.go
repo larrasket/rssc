@@ -8,7 +8,7 @@ import (
 
 	_ "embed"
 
-	"github.com/larrasket/rssc"
+	"github.com/larrasket/rssc/filter"
 	"github.com/patrickmn/go-cache"
 )
 
@@ -30,7 +30,7 @@ func main() {
 			return
 		}
 
-		prams := rssc.FilterPrams{AuthorRegex: q.Get("authorf"),
+		prams := filter.FilterPrams{AuthorRegex: q.Get("authorf"),
 			ContentRegex:     q.Get("contentf"),
 			TitleRegex:       q.Get("titlef"),
 			DescriptionRegex: q.Get("descriptionf"),
@@ -43,13 +43,13 @@ func main() {
 			}(q.Get("net")),
 		}
 
-		entries, err := rssc.FilterFeeds(&prams)
+		entries, err := filter.FilterFeeds(&prams)
 		if err != nil {
 			w.Write([]byte(err.Error()))
 		}
 
 		ftype := q.Get("t")
-		feeds, err := rssc.GenerateFeeds(entries, ftype)
+		feeds, err := filter.GenerateFeeds(entries, ftype)
 		if err != nil {
 			w.Write([]byte(err.Error()))
 		}
