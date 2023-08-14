@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
+<meta name="generator" content=
+"HTML Tidy for HTML5 for Linux version 5.7.45" />
 <!-- 2023-08-14 Mon 07:08 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta http-equiv="Content-Type" content=
+"text/html; charset=utf-8" />
+<meta name="viewport" content=
+"width=device-width, initial-scale=1" />
 <title>rssc - rss customizer</title>
 <meta name="author" content="Salih Muhammed" />
 <meta name="generator" content="Org Mode" />
 <style>
+<![CDATA[
   #content { max-width: 60em; margin: auto; }
   .title  { text-align: center;
              margin-bottom: .2em; }
@@ -192,8 +197,11 @@
   .org-info-js_search-highlight
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { }
+]]>
 </style>
+
 <script>
+<![CDATA[
   window.MathJax = {
     tex: {
       ams: {
@@ -218,94 +226,87 @@
       displayOverflow: 'overflow'
     }
   };
+]]>
 </script>
-
-<script
-  id="MathJax-script"
-  async
-  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-</script>
+<script id="MathJax-script" async="async" src=
+"https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
 <div id="content" class="content">
 <h1 class="title">rssc - rss customizer</h1>
-<p>
-rssc provides a real-time, self-hostable regex-oriented customization service for atom,
-rss and json feeds.
-</p>
-
+<p>rssc provides a real-time, self-hostable regex-oriented
+customization service for atom, rss and json feeds.</p>
 <div id="outline-container-org8e7e0c0" class="outline-2">
 <h2 id="org8e7e0c0">Usage</h2>
 <div class="outline-text-2" id="text-org8e7e0c0">
-<p>
-rssc uses get request parameters to read user&rsquo;s preferences. following are the
-supported parameters:
-</p>
+<p>rssc uses get request parameters to read user’s preferences.
+following are the supported parameters:</p>
 <ul class="org-ul">
-<li><code>src</code>: the source URL of the feeds. Example: <a href="https://hnrss.org/newest">https://hnrss.org/newest</a></li>
-<li><code>t</code>: the type of desired source, can be <code>rss</code>, <code>atom</code> or <code>json</code>.</li>
-<li><code>descriptionf</code>: regular expression filter to filter feeds based on the description property.</li>
-<li><code>titlef</code>: regular expression filter to filter feeds based on the title property.</li>
-<li><code>contentf</code>: regular expression filter to filter feeds based on the content property.</li>
-<li><code>net</code>: boolean (1 or 0) (default to 0 when omitted) whether to use the .NET
-engine regex instead of Go&rsquo;s.</li>
+<li><code>src</code>: the source URL of the feeds. Example:
+<a href="https://hnrss.org/newest">https://hnrss.org/newest</a></li>
+<li><code>t</code>: the type of desired source, can be
+<code>rss</code>, <code>atom</code> or <code>json</code>.</li>
+<li><code>descriptionf</code>: regular expression filter to filter
+feeds based on the description property.</li>
+<li><code>titlef</code>: regular expression filter to filter feeds
+based on the title property.</li>
+<li><code>contentf</code>: regular expression filter to filter
+feeds based on the content property.</li>
+<li><code>net</code>: boolean (1 or 0) (default to 0 when omitted)
+whether to use the .NET engine regex instead of Go’s.</li>
 </ul>
-
-<p>
-All regex should be valid <a href="https://github.com/google/re2/wiki/Syntax">RE2 regex syntax</a> (in case of <code>net</code>, see <a href="https://learn.microsoft.com/en-us/dotnet/standard/base-types/regular-expression-language-quick-reference">MS&rsquo; Regular Expression Language</a>).
-</p>
+<p>All regex should be valid <a href=
+"https://github.com/google/re2/wiki/Syntax">RE2 regex syntax</a>
+(in case of <code>net</code>, see <a href=
+"https://learn.microsoft.com/en-us/dotnet/standard/base-types/regular-expression-language-quick-reference">
+MS’ Regular Expression Language</a>).</p>
 </div>
 </div>
 <div id="outline-container-org20e3089" class="outline-2">
 <h2 id="org20e3089">Examples</h2>
 <div class="outline-text-2" id="text-org20e3089">
-<p>
-Replace <a href="https://rssc.fly.dev/">https://rssc.fly.dev/</a> in the following examples with your instance of
-rssc (can be a <code>localhost:8080</code> if self-hosted).
-</p>
-
+<p>Replace <a href=
+"https://rssc.fly.dev/">https://rssc.fly.dev/</a> in the following
+examples with your instance of rssc (can be a
+<code>localhost:8080</code> if self-hosted).</p>
 <ul class="org-ul">
-<li><p>
-Get Edward Snowden tweets that mention the CIA:
-</p>
-
-<p>
-<a href="https://rssc.fly.dev/rss?src=https://nitter.lacontrevoie.fr/Snowden/rss&amp;descriptionf=CIA">https://rssc.fly.dev/rss?src=https://nitter.lacontrevoie.fr/Snowden/rss&amp;descriptionf=CIA</a>
-</p></li>
-<li><p>
-Get all new feeds that contain the word &ldquo;emacs&rdquo; but not the word &ldquo;vim&rdquo;, and
-not posted by user lr0 (hnrss.org does not provide a creator/author property, so the author filter here is only for a demonstration purpose.):
-</p>
-
-<p>
-<a href="https://rssc.fly.dev/rss?src=https://hnrss.org/newest?q=emacs&amp;titlef=%5E(?!.*%5Cbvim%5Cb).*%5CbEmacs%5Cb.*&amp;net=1&amp;authorf=%5E(?!.*%5Cblr0%5Cb).*$">https://rssc.fly.dev/rss?src=https://hnrss.org/newest?q=emacs&amp;titlef=^(?!.*\bvim\b).*\bEmacs\b.*&amp;net=1&amp;authorf=^(?!.*\blr0\b).*$</a>
-</p>
-
-<p>
-Note that <code>net</code> is used here because RE2 does not support lookarounds.
-</p></li>
-<li><p>
-Get only posts about OpenAI from 4chan&rsquo;s g board:
-</p>
-
-<p>
-<a href="https://rssc.fly.dev/rss?src=https://boards.4channel.org/g/index.rss&amp;titlef=Open%5Cs?AI%7COpenAI">https://rssc.fly.dev/rss?src=https://boards.4channel.org/g/index.rss&amp;titlef=Open\s?AI|OpenAI</a>
-</p></li>
-<li><p>
-Get geopolitical updates from your favorite hacker and skip all free software
-movement goody propaganda:
-</p>
-
-<p>
-<a href="https://rssc.fly.dev/rss?src=https://stallman.org/rss/rss.xml&amp;contentf=%5E(?=.*(?:palestine%7Csyria%7Cegypt%7Ciraq%7Cisrael%7Calgeria%7Cmorocco))(?!.*(?:linux%7Cgnu%7Csoftware%7Cprogramming%7Cprogram)).*$&amp;net=1">https://rssc.fly.dev/rss?src=https://stallman.org/rss/rss.xml&amp;contentf=^(?=.*(?:palestine|syria|egypt|iraq|israel|algeria|morocco))(?!.*(?:linux|gnu|software|programming|program)).*$&amp;net=1</a>
-</p></li>
-<li><p>
-Get BBC middle east updates that&rsquo;s only related to Palestine:
-</p>
-
-<p>
-<a href="https://rssc.fly.dev/rss?src=http://feeds.bbci.co.uk/news/world/middle_east/rss.xml&amp;titlef=(?i)palestine%7Cpalestinian%7Cgaza">https://rssc.fly.dev/rss?src=http://feeds.bbci.co.uk/news/world/middle_east/rss.xml&amp;titlef=(?i)palestine|palestinian|gaza</a>
-</p></li>
+<li>
+<p>Get Edward Snowden tweets that mention the CIA:</p>
+<p><a href=
+"https://rssc.fly.dev/rss?src=https://nitter.lacontrevoie.fr/Snowden/rss&amp;descriptionf=CIA">
+https://rssc.fly.dev/rss?src=https://nitter.lacontrevoie.fr/Snowden/rss&amp;descriptionf=CIA</a></p>
+</li>
+<li>
+<p>Get all new feeds that contain the word “emacs” but not the word
+“vim”, and not posted by user lr0 (hnrss.org does not provide a
+creator/author property, so the author filter here is only for a
+demonstration purpose.):</p>
+<p><a href=
+"https://rssc.fly.dev/rss?src=https://hnrss.org/newest?q=emacs&amp;titlef=%5E(?!.*%5Cbvim%5Cb).*%5CbEmacs%5Cb.*&amp;net=1&amp;authorf=%5E(?!.*%5Cblr0%5Cb).*$">
+https://rssc.fly.dev/rss?src=https://hnrss.org/newest?q=emacs&amp;titlef=^(?!.*\bvim\b).*\bEmacs\b.*&amp;net=1&amp;authorf=^(?!.*\blr0\b).*$</a></p>
+<p>Note that <code>net</code> is used here because RE2 does not
+support lookarounds.</p>
+</li>
+<li>
+<p>Get only posts about OpenAI from 4chan’s g board:</p>
+<p><a href=
+"https://rssc.fly.dev/rss?src=https://boards.4channel.org/g/index.rss&amp;titlef=Open%5Cs?AI%7COpenAI">
+https://rssc.fly.dev/rss?src=https://boards.4channel.org/g/index.rss&amp;titlef=Open\s?AI|OpenAI</a></p>
+</li>
+<li>
+<p>Get geopolitical updates from your favorite hacker and skip all
+free software movement goody propaganda:</p>
+<p><a href=
+"https://rssc.fly.dev/rss?src=https://stallman.org/rss/rss.xml&amp;contentf=%5E(?=.*(?:palestine%7Csyria%7Cegypt%7Ciraq%7Cisrael%7Calgeria%7Cmorocco))(?!.*(?:linux%7Cgnu%7Csoftware%7Cprogramming%7Cprogram)).*$&amp;net=1">
+https://rssc.fly.dev/rss?src=https://stallman.org/rss/rss.xml&amp;contentf=^(?=.*(?:palestine|syria|egypt|iraq|israel|algeria|morocco))(?!.*(?:linux|gnu|software|programming|program)).*$&amp;net=1</a></p>
+</li>
+<li>
+<p>Get BBC middle east updates that’s only related to
+Palestine:</p>
+<p><a href=
+"https://rssc.fly.dev/rss?src=http://feeds.bbci.co.uk/news/world/middle_east/rss.xml&amp;titlef=(?i)palestine%7Cpalestinian%7Cgaza">
+https://rssc.fly.dev/rss?src=http://feeds.bbci.co.uk/news/world/middle_east/rss.xml&amp;titlef=(?i)palestine|palestinian|gaza</a></p>
+</li>
 </ul>
 </div>
 </div>
@@ -313,10 +314,13 @@ Get BBC middle east updates that&rsquo;s only related to Palestine:
 <h2 id="org84dfde3">Notes</h2>
 <div class="outline-text-2" id="text-org84dfde3">
 <ul class="org-ul">
-<li>RE2 is much safer that the .NET Regex, that&rsquo;s to say, all the good features
-that .NET engine enables you to use come with a risk cost and ends up
-enabling <a href="https://github.com/dlclark/regexp2#catastrophic-backtracking-and-timeouts">catastrophic backtracking</a>, therefore a timeout of 5 seconds is currently
-enabled on fly.dev instance when using <code>net=1</code>.</li>
+<li>RE2 is much safer that the .NET Regex, that’s to say, all the
+good features that .NET engine enables you to use come with a risk
+cost and ends up enabling <a href=
+"https://github.com/dlclark/regexp2#catastrophic-backtracking-and-timeouts">
+catastrophic backtracking</a>, therefore a timeout of 5 seconds is
+currently enabled on fly.dev instance when using
+<code>net=1</code>.</li>
 </ul>
 </div>
 </div>
