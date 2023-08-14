@@ -6,6 +6,7 @@ require (
 	github.com/dlclark/regexp2 v1.10.0
 	github.com/gorilla/feeds v1.1.1
 	github.com/mmcdole/gofeed v1.2.1
+	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/pkg/errors v0.9.1
 )
 
