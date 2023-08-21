@@ -3,18 +3,20 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for HTML5 for Linux version 5.7.45" />
-  <!-- 2023-08-14 Mon 18:25 -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=utf-8" />
-  <meta name="viewport" content=
-  "width=device-width, initial-scale=1" />
-  <title>rssc - rss customizer</title>
-  <meta name="author" content="Salih Muhammed" />
-  <meta name="generator" content="Org Mode" />
-  <style>
-  <![CDATA[
+<meta name="generator" content=
+"HTML Tidy for HTML5 for Linux version 5.7.45" />
+<!-- 2023-08-21 Mon 18:47 -->
+<meta http-equiv="Content-Type" content=
+"text/html; charset=utf-8" />
+<meta name="viewport" content=
+"width=device-width, initial-scale=1" />
+<title>rssc - rss customizer</title>
+<meta name="author" content="Salih Muhammed" />
+<meta name="generator" content="Org Mode" />
+<style>
+
+
+<![CDATA[
   #content { max-width: 60em; margin: auto; }
   .title  { text-align: center;
              margin-bottom: .2em; }
@@ -197,10 +199,11 @@
   .org-info-js_search-highlight
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { }
-  ]]>
-  </style>
-  <script>
-  <![CDATA[
+]]>
+</style>
+
+<script>
+<![CDATA[
   window.MathJax = {
     tex: {
       ams: {
@@ -225,139 +228,120 @@
       displayOverflow: 'overflow'
     }
   };
-  ]]>
-  </script>
-  <script id="MathJax-script" async="async" src=
-  "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+]]>
+</script>
+<script id="MathJax-script" async="async" src=
+"https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
-<body style="width: 800px; margin:0 auto;">
-  <div id="content" class="content">
-    <h1 class="title">rssc - rss customizer</h1>
-    <p>rssc provides a real-time, self-hostable regex-oriented
-    customization service for atom, rss and json feeds.</p>
-    <div id="outline-container-org42c23d7" class="outline-2">
-      <h2 id="org42c23d7">Usage</h2>
-      <div class="outline-text-2" id="text-org42c23d7">
-        <p>rssc uses get request parameters to read user’s
-        preferences. following are the supported parameters:</p>
-        <ul class="org-ul">
-          <li><code>src</code>: the source URL of the feeds.
-          Example: <a href=
-          "https://hnrss.org/newest">https://hnrss.org/newest</a></li>
-          <li><code>t</code>: the type of desired source, can be
-          <code>rss</code>, <code>atom</code> or
-          <code>json</code>.</li>
-          <li><code>descriptionf</code>: regular expression filter
-          to filter feeds based on the description property.</li>
-          <li><code>titlef</code>: regular expression filter to
-          filter feeds based on the title property.</li>
-          <li><code>contentf</code>: regular expression filter to
-          filter feeds based on the content property.</li>
-          <li><code>net</code>: boolean (1 or 0) (default to 0 when
-          omitted) whether to use the .NET engine regex instead of
-          Go’s.</li>
-        </ul>
-        <p>All regex should be valid <a href=
-        "https://github.com/google/re2/wiki/Syntax">RE2 regex
-        syntax</a> (in case of <code>net</code>, see <a href=
-        "https://learn.microsoft.com/en-us/dotnet/standard/base-types/regular-expression-language-quick-reference">
-        MS’ Regular Expression Language</a>).</p>
-      </div>
-    </div>
-    <div id="outline-container-org20bfcf8" class="outline-2">
-      <h2 id="org20bfcf8">Examples</h2>
-      <div class="outline-text-2" id="text-org20bfcf8">
-        <p>Replace <a href=
-        "https://rssc.fly.dev/">https://rssc.fly.dev/</a> in the
-        following examples with your instance of rssc (can be a
-        <code>localhost:8080</code> if self-hosted).</p>
-        <ul class="org-ul">
-          <li>
-            <p>Get Edward Snowden tweets that mention the CIA:</p>
-            <p><a href=
-            "https://rssc.fly.dev/rss?src=https://nitter.lacontrevoie.fr/Snowden/rss&amp;descriptionf=CIA">
-            https://rssc.fly.dev/rss?src=https://nitter.lacontrevoie.fr/Snowden/rss&amp;descriptionf=CIA</a></p>
-          </li>
-          <li>
-            <p>Get all new feeds that contain the word “emacs” but
-            not the word “vim”, and not posted by user lr0
-            (hnrss.org does not provide a creator/author property,
-            so the author filter here is only for a demonstration
-            purpose.):</p>
-            <p><a href=
-            "https://rssc.fly.dev/rss?src=https://hnrss.org/newest?q=emacs&amp;titlef=%5E(?!.*%5Cbvim%5Cb).*%5CbEmacs%5Cb.*&amp;net=1&amp;authorf=%5E(?!.*%5Cblr0%5Cb).*$">
-            https://rssc.fly.dev/rss?src=https://hnrss.org/newest?q=emacs&amp;titlef=^(?!.*\bvim\b).*\bEmacs\b.*&amp;net=1&amp;authorf=^(?!.*\blr0\b).*$</a></p>
-            <p>Note that <code>net</code> is used here because RE2
-            does not support lookarounds.</p>
-          </li>
-          <li>
-            <p>Get only posts about OpenAI from 4chan’s g
-            board:</p>
-            <p><a href=
-            "https://rssc.fly.dev/rss?src=https://boards.4channel.org/g/index.rss&amp;titlef=Open%5Cs?AI%7COpenAI">
-            https://rssc.fly.dev/rss?src=https://boards.4channel.org/g/index.rss&amp;titlef=Open\s?AI|OpenAI</a></p>
-          </li>
-          <li>
-            <p>Get geopolitical updates from your favorite hacker
-            and skip all free software movement goody
-            propaganda:</p>
-            <p><a href=
-            "https://rssc.fly.dev/rss?src=https://stallman.org/rss/rss.xml&amp;contentf=%5E(?=.*(?:palestine%7Csyria%7Cegypt%7Ciraq%7Cisrael%7Calgeria%7Cmorocco))(?!.*(?:linux%7Cgnu%7Csoftware%7Cprogramming%7Cprogram)).*$&amp;net=1">
-            https://rssc.fly.dev/rss?src=https://stallman.org/rss/rss.xml&amp;contentf=^(?=.*(?:palestine|syria|egypt|iraq|israel|algeria|morocco))(?!.*(?:linux|gnu|software|programming|program)).*$&amp;net=1</a></p>
-          </li>
-          <li>
-            <p>Get BBC middle east updates that’s only related to
-            Palestine:</p>
-            <p><a href=
-            "https://rssc.fly.dev/rss?src=http://feeds.bbci.co.uk/news/world/middle_east/rss.xml&amp;titlef=(?i)palestine%7Cpalestinian%7Cgaza">
-            https://rssc.fly.dev/rss?src=http://feeds.bbci.co.uk/news/world/middle_east/rss.xml&amp;titlef=(?i)palestine|palestinian|gaza</a></p>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div id="outline-container-orgc2d3a82" class="outline-2">
-      <h2 id="orgc2d3a82">Notes</h2>
-      <div class="outline-text-2" id="text-orgc2d3a82">
-        <ul class="org-ul">
-          <li>RE2 is much safer that the .NET Regex, that’s to say,
-          all the good features that .NET engine enables you to use
-          come with a risk cost and ends up enabling <a href=
-          "https://github.com/dlclark/regexp2#catastrophic-backtracking-and-timeouts">
-          catastrophic backtracking</a>, therefore a timeout of 5
-          seconds is currently enabled on fly.dev instance when
-          using <code>net=1</code>.</li>
-          <li>rssc is pre-alpha. Please report bugs here <a href=
-          "https://github.com/larrasket/rssc">larrasket/rssc</a>.</li>
-        </ul>
-      </div>
-    </div>
-    <div id="outline-container-orgf0eb9fe" class="outline-2">
-      <h2 id="orgf0eb9fe">Self-host</h2>
-      <div class="outline-text-2" id="text-orgf0eb9fe">
-        <p>To host rssc locally, install it using Go:</p>
-        <div class="org-src-container">
-          <pre class=
-          "src src-shell">go install github.com/larrasket/rssc@latest
-</pre>
-        </div>
-        <p>Set environment variable for <code>PORT</code>, if none
-        rssc will use <code>:8080</code> by default.</p>
-        <div class="org-src-container">
-          <pre class="src src-shell"><span style=
-          "color: #bbc2cf;">PORT</span>=<span style=
-          "color: #b4916d; font-weight: bold;">4040</span> rssc
-</pre>
-        </div>
-        <p>Now rssc should be running at
-        <code>localhost:4040</code>. You can use the same examples
-        provided, with replacing fly domain with your
-        localhost.</p>
-      </div>
-    </div>
-  </div>
-  <div id="postamble" class="status">
-    <p class="author">Author: Salih Muhammed</p>
-    <p class="date">Created: 2023-08-14 Mon 18:25</p>
-  </div>
+<body>
+<div id="content" class="content">
+<h1 class="title">rssc - rss customizer</h1>
+<p>rssc provides a real-time, self-hostable regex-oriented
+customization service for atom, rss and json feeds.</p>
+<div id="outline-container-org464206f" class="outline-2">
+<h2 id="org464206f">Usage</h2>
+<div class="outline-text-2" id="text-org464206f">
+<p>rssc uses get request parameters to read user’s preferences.
+following are the supported parameters:</p>
+<ul class="org-ul">
+<li><code>src</code>: the source URL of the feeds. Example:
+<a href="https://hnrss.org/newest">https://hnrss.org/newest</a></li>
+<li><code>t</code>: the type of desired feeds (that rssc will
+return), can be <code>rss</code>, <code>atom</code> or
+<code>json</code>.</li>
+<li><code>descriptionf</code>: regular expression filter to filter
+feeds based on the description property.</li>
+<li><code>titlef</code>: regular expression filter to filter feeds
+based on the title property.</li>
+<li><code>contentf</code>: regular expression filter to filter
+feeds based on the content property.</li>
+<li><code>net</code>: boolean (1 or 0) (default to 0 when omitted)
+whether to use the .NET engine regex instead of Go’s.</li>
+</ul>
+<p>All regex should be valid <a href=
+"https://github.com/google/re2/wiki/Syntax">RE2 regex syntax</a>
+(in case of <code>net</code>, see <a href=
+"https://learn.microsoft.com/en-us/dotnet/standard/base-types/regular-expression-language-quick-reference">
+MS’ Regular Expression Language</a>).</p>
+</div>
+</div>
+<div id="outline-container-ex" class="outline-2">
+<h2 id="ex">Examples</h2>
+<div class="outline-text-2" id="text-ex">
+<p>Replace <a href=
+"https://rssc.fly.dev/">https://rssc.fly.dev/</a> in the following
+examples with your instance of rssc (can be a
+<code>localhost:8080</code> if self-hosted).</p>
+<ul class="org-ul">
+<li>
+<p>Get all new feeds that contain the word “emacs” but not the word
+“vim”, and not posted by user lr0 (hnrss.org does not provide a
+creator/author property, so the author filter here is only for a
+demonstration purpose.):</p>
+<p><a href=
+"https://rssc.fly.dev/rss?src=https://hnrss.org/newest?q=emacs&amp;titlef=%5E(?!.*%5Cbvim%5Cb).*%5CbEmacs%5Cb.*&amp;net=1&amp;authorf=%5E(?!.*%5Cblr0%5Cb).*$">
+https://rssc.fly.dev/rss?src=https://hnrss.org/newest?q=emacs&amp;titlef=^(?!.*\bvim\b).*\bEmacs\b.*&amp;net=1&amp;authorf=^(?!.*\blr0\b).*$</a></p>
+<p>Do note that <code>net</code> is used here because RE2 does not
+support lookarounds.</p>
+</li>
+<li>
+<p>Get geopolitical updates from your favorite hacker and skip all
+free software movement blessed propaganda:</p>
+<p><a href=
+"https://rssc.fly.dev/rss?src=https://stallman.org/rss/rss.xml&amp;contentf=%5E(?=.*(?:palestine%7Csyria%7Cegypt%7Ciraq%7Cisrael%7Calgeria%7Cmorocco))(?!.*(?:linux%7Cgnu%7Csoftware%7Cprogramming%7Cprogram)).*$&amp;net=1">
+https://rssc.fly.dev/rss?src=https://stallman.org/rss/rss.xml&amp;contentf=^(?=.*(?:palestine|syria|egypt|iraq|israel|algeria|morocco))(?!.*(?:linux|gnu|software|programming|program)).*$&amp;net=1</a></p>
+</li>
+<li>
+<p>Get BBC middle east updates, only ones that are related to
+Palestine:</p>
+<p><a href=
+"https://rssc.fly.dev/rss?src=http://feeds.bbci.co.uk/news/world/middle_east/rss.xml&amp;titlef=(?i)palestine%7Cpalestinian%7Cgaza">
+https://rssc.fly.dev/rss?src=http://feeds.bbci.co.uk/news/world/middle_east/rss.xml&amp;titlef=(?i)palestine|palestinian|gaza</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org56bd944" class="outline-2">
+<h2 id="org56bd944">Self-host</h2>
+<div class="outline-text-2" id="text-org56bd944">
+<p>To host rssc locally, install it using Go:</p>
+<div class="org-src-container">
+<pre class=
+"src src-shell">go install github.com/larrasket/rssc@latest
+</pre></div>
+<p>Set environment variable for <code>PORT</code>, if user doesn’t
+set a <code>PORT</code> value, rssc will use <code>:8080</code> by
+default.</p>
+<div class="org-src-container">
+<pre class="src src-shell"><span style=
+"color: #bbc2cf;">PORT</span>=<span style=
+"color: #b4916d; font-weight: bold;">4040</span> rssc
+</pre></div>
+<p>Now rssc should be running at <code>localhost:4040</code>. You
+can use the same <a href="#ex">examples</a> provided, with
+replacing fly domain with your localhost.</p>
+</div>
+</div>
+<div id="outline-container-orgf924b7f" class="outline-2">
+<h2 id="orgf924b7f">Notes</h2>
+<div class="outline-text-2" id="text-orgf924b7f">
+<ul class="org-ul">
+<li>RE2 is much safer that the .NET Regex, that’s to say, all the
+good features that .NET engine enables you to use come with a risk
+cost and ends up enabling <a href=
+"https://github.com/dlclark/regexp2#catastrophic-backtracking-and-timeouts">
+catastrophic backtracking</a>, therefore a timeout of 5 seconds is
+currently enabled on the fly.dev instance when using
+<code>net=1</code>.</li>
+<li>rssc is pre-alpha. Please report bugs here <a href=
+"https://github.com/larrasket/rssc">larrasket/rssc</a>.</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Salih Muhammed</p>
+<p class="date">Created: 2023-08-21 Mon 18:47</p>
+</div>
 </body>
 </html>
