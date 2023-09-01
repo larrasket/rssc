@@ -48,6 +48,7 @@ func GenerateFeeds(feeds *gofeed.Feed, t string) (string, error) {
 			Link:        &generator.Link{Href: i.Link},
 			Description: i.Description,
 			Author:      author,
+			Content:     i.Content,
 			Created:     *i.PublishedParsed})
 	}
 	feed.Items = gfeeds

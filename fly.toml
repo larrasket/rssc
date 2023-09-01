@@ -1,4 +1,4 @@
-# fly.toml app configuration file generated for rssc on 2023-08-14T03:46:39+03:00
+# fly.toml app configuration file generated for rssc on 2023-08-21T19:45:05+03:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
@@ -7,14 +7,6 @@ app = "rssc"
 primary_region = "ams"
 
 [build]
-  builder = "paketobuildpacks/builder:base"
-  buildpacks = ["gcr.io/paketo-buildpacks/go"]
-
-	
-
-
-[env]
-  PORT = "8080"
 
 [http_service]
   internal_port = 8080
