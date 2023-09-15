@@ -15,6 +15,7 @@ type FilterPrams struct {
 	AuthorRegex,
 	ContentRegex,
 	TitleRegex,
+	LinkRegex,
 	DescriptionRegex string
 	DotNet bool // whether to use .NET Regex Engineg
 }
@@ -36,7 +37,7 @@ func FilterFeeds(prams *FilterPrams) (*gofeed.Feed, error) {
 
 	if prams == nil ||
 		len(prams.AuthorRegex)+len(prams.ContentRegex)+
-			len(prams.TitleRegex)+len(prams.DescriptionRegex) == 0 {
+			len(prams.TitleRegex)+len(prams.DescriptionRegex)+len(prams.LinkRegex) == 0 {
 		return feeds, nil
 	}
 	if prams.DotNet {
@@ -47,7 +48,7 @@ func FilterFeeds(prams *FilterPrams) (*gofeed.Feed, error) {
 
 // Implements filtering for Google's RE2 standards
 func withRE2(feeds *gofeed.Feed, prams *FilterPrams) (*gofeed.Feed, error) {
-	var authorF, contentF, titleF, DescriptionF *regexp.Regexp
+	var authorF, contentF, titleF, descriptionF, linkF *regexp.Regexp
 
 	// validate filters
 	authorF, err := validateRE2(prams.AuthorRegex)
@@ -65,7 +66,12 @@ func withRE2(feeds *gofeed.Feed, prams *FilterPrams) (*gofeed.Feed, error) {
 		return nil, err
 	}
 
-	DescriptionF, err = validateRE2(prams.DescriptionRegex)
+	descriptionF, err = validateRE2(prams.DescriptionRegex)
+	if err != nil {
+		return nil, err
+	}
+
+	linkF, err = validateRE2(prams.LinkRegex)
 	if err != nil {
 		return nil, err
 	}
@@ -99,8 +105,13 @@ func withRE2(feeds *gofeed.Feed, prams *FilterPrams) (*gofeed.Feed, error) {
 			fitlerd = append(fitlerd, i)
 			continue
 		}
+		// search link
+		if linkF != nil && linkF.MatchString(i.Link) {
+			fitlerd = append(fitlerd, i)
+			continue
+		}
 		// search description
-		if DescriptionF != nil && DescriptionF.MatchString(i.Description) {
+		if descriptionF != nil && descriptionF.MatchString(i.Description) {
 			fitlerd = append(fitlerd, i)
 		}
 	}
@@ -111,7 +122,7 @@ func withRE2(feeds *gofeed.Feed, prams *FilterPrams) (*gofeed.Feed, error) {
 // Implements filtering for Microsoft's .NET regex engine
 // TODO refactor
 func withDotNETRegex(feeds *gofeed.Feed, prams *FilterPrams) (*gofeed.Feed, error) {
-	var authorF, contentF, titleF, DescriptionF *regexp2.Regexp
+	var authorF, contentF, titleF, descriptionF, linkF *regexp2.Regexp
 
 	// validate filters
 	authorF, err := validateNET(prams.AuthorRegex)
@@ -129,7 +140,12 @@ func withDotNETRegex(feeds *gofeed.Feed, prams *FilterPrams) (*gofeed.Feed, erro
 		return nil, err
 	}
 
-	DescriptionF, err = validateNET(prams.DescriptionRegex)
+	descriptionF, err = validateNET(prams.DescriptionRegex)
+	if err != nil {
+		return nil, err
+	}
+
+	linkF, err = validateNET(prams.LinkRegex)
 	if err != nil {
 		return nil, err
 	}
@@ -170,6 +186,20 @@ func withDotNETRegex(feeds *gofeed.Feed, prams *FilterPrams) (*gofeed.Feed, erro
 				continue
 			}
 		}
+
+		// search title
+		if linkF != nil {
+			p, err := linkF.MatchString(i.Link)
+			if err != nil {
+				return nil, errors.Wrapf(err, "timeout on expression %s",
+					prams.LinkRegex)
+			}
+			if p {
+				fitlerd = append(fitlerd, i)
+				continue
+			}
+		}
+
 		// search title
 		if titleF != nil {
 			p, err := titleF.MatchString(i.Title)
@@ -183,8 +213,8 @@ func withDotNETRegex(feeds *gofeed.Feed, prams *FilterPrams) (*gofeed.Feed, erro
 			}
 		}
 		// search description
-		if DescriptionF != nil {
-			p, err := DescriptionF.MatchString(i.Description)
+		if descriptionF != nil {
+			p, err := descriptionF.MatchString(i.Description)
 			if err != nil {
 				return nil, errors.Wrapf(err, "timeout on expression %s",
 					prams.DescriptionRegex)

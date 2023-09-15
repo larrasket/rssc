@@ -35,6 +35,7 @@ func main() {
 			ContentRegex:     q.Get("contentf"),
 			TitleRegex:       q.Get("titlef"),
 			DescriptionRegex: q.Get("descriptionf"),
+			LinkRegex:        q.Get("linkf"),
 			URL:              q.Get("src"),
 			DotNet: func(b string) bool {
 				if b == "1" {
