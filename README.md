@@ -12,7 +12,7 @@ supported parameters:
 -   `descriptionf`: regular expression filter to filter feeds based on the description property.
 -   `titlef`: regular expression filter to filter feeds based on the title property.
 -   `contentf`: regular expression filter to filter feeds based on the content property.
--   `link`: regular expression filter to filter feeds based on the link property.
+-   `linkf`: regular expression filter to filter feeds based on the link property.
 -   `net`: boolean (1 or 0) (default to 0 when omitted) whether to use the .NET
     engine regex instead of Go&rsquo;s.
 
